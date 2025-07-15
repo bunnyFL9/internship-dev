@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProcodeCG - 2025 Internship Alumni</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .square-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .square-button {
+            width: 300px;
+            height: 300px;
+            border: 2px solid #009DFF;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .square-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 157, 255, 0.3);
+        }
+        
+        .button-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 18px;
+            padding: 20px;
+        }
+        
+        .hero-image img {
+            transition: opacity 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .square-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+            
+            .square-button {
+                width: 250px;
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="./procodelogo.png" alt="ProcodeCG Logo">
+                </div>
+                
+                <nav class="navigation">
+                    <ul class="nav-menu">
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li><a href="#" class="nav-link">Calendar</a></li>
+                        <li><a href="#" class="nav-link">Programs</a></li>
+                        <li><a href="#" class="nav-link">Event</a></li>
+                        <li><a href="#" class="nav-link active">Internship</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-actions">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="user-profile">
+                        <div class="profile-image">
+                            <img src="./fotoprofil.png" alt="Restu Jagat W.">
+                        </div>
+                        <span class="user-name">Restu Jagat W.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Team collaboration" id="heroImage">
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Square Buttons Section -->
+            <section class="square-buttons">
+                <div class="square-button" id="teluButton">
+                    <img src="./logotelu.png" alt="Telkom University" class="button-image">
+                </div>
+                
+                <div class="square-button" id="binusButton">
+                    <img src="./logobinus.png" alt="Binus University" class="button-image">
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="contact-info">
+                    <h3>Contact Us</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <span>procodecg@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <span>(+62)8122015409</span>
+                    </div>
+                </div>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hero image change on hover with persistent state
+        const heroImage = document.getElementById('heroImage');
+        const teluButton = document.getElementById('teluButton');
+        const binusButton = document.getElementById('binusButton');
+        
+        const defaultHero = "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80";
+        const teluHero = "./teluhero.jpg";
+        const binusHero = "./binushero.jpg";
+        
+        let currentHero = defaultHero;
+        
+        // Function to change hero image with smooth transition
+        function changeHeroImage(newSrc) {
+            if (newSrc !== currentHero) {
+                heroImage.style.opacity = '0';
+                setTimeout(() => {
+                    heroImage.src = newSrc;
+                    heroImage.style.opacity = '1';
+                    currentHero = newSrc;
+                }, 250); // Half of the transition time
+            }
+        }
+        
+        // Telkom University button hover
+        teluButton.addEventListener('mouseenter', function() {
+            changeHeroImage(teluHero);
+        });
+        // Add click event to navigate to telu.html
+        teluButton.addEventListener('click', function() {
+            window.location.href = 'telu.html';
+        });
+        // Binus University button hover
+        binusButton.addEventListener('mouseenter', function() {
+            changeHeroImage(binusHero);
+        });
+        // Add click event to navigate to binus.html
+        binusButton.addEventListener('click', function() {
+            window.location.href = 'binus.html';
+        });
+        // Remove the mouseleave events so the image stays on the last hovered university
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,468 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
+}
+
+.container {
+    max-width: 1728px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles */
+.header {
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.logo img {
+    height: 30px;
+    width: auto;
+}
+
+.navigation {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #484848;
+    font-weight: 500;
+    font-size: 20px;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #009DFF;
+}
+
+.nav-link.active {
+    color: #009DFF;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #009DFF;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.notification-icon {
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-image {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #009DFF;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-name {
+    font-weight: 500;
+    color: #4A4A4A;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 636px;
+    overflow: hidden;
+    border-radius: 40px;
+    margin: 20px 0;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Main Content */
+.main-content {
+    padding: 40px 0;
+}
+
+.description-section {
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.section-description {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #666;
+    max-width: 1646px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Alumni Cards */
+.alumni-section {
+    margin-bottom: 60px;
+}
+
+.alumni-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(551px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.alumni-card {
+    background: linear-gradient(135deg, #0D6EFD 0%, #009DFF 100%);
+    border-radius: 20px;
+    padding: 30px;
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.alumni-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(13, 110, 253, 0.3);
+}
+
+.card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.year {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000;
+    line-height: 1.4;
+}
+
+/* Gallery Section */
+.gallery-section {
+    margin-bottom: 60px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(993px, 1fr));
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 40px;
+    overflow: hidden;
+    height: 661px;
+}
+
+.gallery-overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.gallery-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(217, 217, 217, 0.5);
+    z-index: 1;
+}
+
+.gallery-overlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-text {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    z-index: 2;
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Footer */
+.footer {
+    background: #009DFF;
+    color: white;
+    padding: 60px 0;
+    margin-top: 80px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.contact-info h3 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #000;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    color: #000;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.contact-icon {
+    width: 44px;
+    height: 41px;
+    background: #383A38;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-link {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #009DFF;
+    text-decoration: none;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.social-link:hover {
+    transform: scale(1.1);
+    background: #f0f0f0;
+}
+
+.social-link i {
+    font-size: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .nav-menu {
+        gap: 20px;
+    }
+    
+    .alumni-grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .nav-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .nav-link {
+        font-size: 18px;
+    }
+    
+    .section-title {
+        font-size: 32px;
+    }
+    
+    .section-description {
+        font-size: 20px;
+    }
+    
+    .alumni-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        height: 400px;
+        border-radius: 20px;
+    }
+    
+    .alumni-card {
+        padding: 20px;
+    }
+    
+    .year {
+        font-size: 24px;
+    }
+    
+    .card-title {
+        font-size: 18px;
+    }
+    
+    .gallery-item {
+        height: 400px;
+        border-radius: 20px;
+    }
+    
+    .gallery-text {
+        bottom: 20px;
+        left: 20px;
+        font-size: 18px;
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alumni-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.alumni-card:nth-child(1) { animation-delay: 0.1s; }
+.alumni-card:nth-child(2) { animation-delay: 0.2s; }
+.alumni-card:nth-child(3) { animation-delay: 0.3s; }
+.alumni-card:nth-child(4) { animation-delay: 0.4s; }
+.alumni-card:nth-child(5) { animation-delay: 0.5s; }
+.alumni-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Custom style for alumni year buttons on index page */
+.alumni-card.year-button {
+    background: #fff !important;
+    background-image: none !important;
+    color: #111 !important;
+    border: 2px solid #111 !important;
+    box-shadow: none;
+}
+.alumni-card.year-button .year,
+.alumni-card.year-button .card-title {
+    color: #111 !important;
+}
+.alumni-card.year-button:hover {
+    background: #009DFF !important;
+    background-image: none !important;
+    color: #111 !important;
+    border-color: #111 !important;
+}
+.alumni-card.year-button:hover .year,
+.alumni-card.year-button:hover .card-title {
+    color: #111 !important;
+}

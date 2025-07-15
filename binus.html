@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProcodeCG - Binus University Internship Alumni</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .small-logo {
+            display: block;
+            margin: 40px auto 20px auto;
+            width: 100px;
+            height: auto;
+        }
+        .alumni-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 40px 0;
+        }
+        .alumni-table th, .alumni-table td {
+            border: 1px solid #ddd;
+            padding: 12px 16px;
+            text-align: left;
+        }
+        .alumni-table th {
+            background-color: #f2f2f2;
+        }
+        .add-btn {
+            background: linear-gradient(90deg, #009DFF 0%, #0D6EFD 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,157,255,0.10);
+            transition: background 0.3s, transform 0.2s;
+            outline: none;
+        }
+        .add-btn:hover {
+            background: linear-gradient(90deg, #0D6EFD 0%, #009DFF 100%);
+            transform: translateY(-2px) scale(1.04);
+        }
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .remove-btn:hover {
+            background: #ffeaea;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="./procodelogo.png" alt="ProcodeCG Logo">
+                </div>
+                <nav class="navigation">
+                    <ul class="nav-menu">
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li><a href="#" class="nav-link">Calendar</a></li>
+                        <li><a href="#" class="nav-link">Programs</a></li>
+                        <li><a href="#" class="nav-link">Event</a></li>
+                        <li><a href="#" class="nav-link active">Internship</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="user-profile">
+                        <div class="profile-image">
+                            <img src="./fotoprofil.png" alt="Restu Jagat W.">
+                        </div>
+                        <span class="user-name">Restu Jagat W.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <img src="./logobinus.png" alt="Binus University Logo" class="small-logo">
+            <section>
+                <div style="display:flex; justify-content:flex-end; align-items:center; margin-bottom:10px;">
+                    <input type="text" id="searchInput" placeholder="Search name..." style="padding:6px 16px; border-radius:6px; border:1px solid #ccc; font-size:16px;">
+                </div>
+                <table class="alumni-table" id="alumniTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Major</th>
+                            <th>Year</th>
+                            <th>Project</th>
+                            <th>Team</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alumniTableBody">
+                        <!-- Rows will be rendered by JS -->
+                    </tbody>
+                </table>
+                <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 20px;">
+                    <button class="add-btn" id="showFormBtn" onclick="showForm()">Add</button>
+                    <button class="remove-btn" id="externalRemoveBtn" onclick="removeSelectedAlumniRow()" disabled style="font-size:16px; color:#fff; background:linear-gradient(90deg,#e74c3c 0%,#ff7675 100%); border:none; border-radius:8px; padding:8px 24px; font-weight:600; cursor:pointer; transition:background 0.3s;">Remove</button>
+                </div>
+                <div id="inputFields" style="display:none; gap:10px; align-items:center;">
+                    <input type="text" id="nameInput" placeholder="Name">
+                    <input type="text" id="majorInput" placeholder="Major">
+                    <input type="text" id="yearInput" placeholder="Year">
+                    <input type="text" id="projectInput" placeholder="Project">
+                    <input type="text" id="teamInput" placeholder="Team">
+                    <button class="add-btn" id="addRowBtn" onclick="addAlumniRow()">Add</button>
+                    <button onclick="hideForm()" style="background:#eee; border:none; border-radius:8px; padding:8px 16px; font-size:16px; cursor:pointer;">Close</button>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="contact-info">
+                    <h3>Contact Us</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <span>procodecg@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <span>(+62)8122015409</span>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        // Alumni Table with Local Storage
+        const STORAGE_KEY = 'binusAlumniTable';
+        function getAlumniData() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [
+                { name: 'Alice Lee', major: 'Computer Science', year: '2025', project: 'Data Analysis', team: 'Gamma' },
+                { name: 'Bob Tan', major: 'Information Systems', year: '2025', project: 'IoT Project', team: 'Delta' }
+            ];
+        }
+        function setAlumniData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+        function renderAlumniTable() {
+            let data = getAlumniData();
+            // Sort by team ascending (parse as number)
+            const originalData = data;
+            data = data.map((row, idx) => ({...row, _originalIdx: idx}));
+            data = data.slice().sort((a, b) => {
+                const teamA = parseInt(a.team, 10);
+                const teamB = parseInt(b.team, 10);
+                return teamA - teamB;
+            });
+            const tbody = document.getElementById('alumniTableBody');
+            tbody.innerHTML = '';
+            data.forEach((row, idx) => {
+                const tr = document.createElement('tr');
+                tr.setAttribute('data-original-idx', row._originalIdx);
+                tr.innerHTML = `
+                    <td>${row.name}</td>
+                    <td>${row.major}</td>
+                    <td>${row.year}</td>
+                    <td>${row.project}</td>
+                    <td>${row.team || ''}</td>
+                `;
+                tr.addEventListener('click', () => selectAlumniRow(row._originalIdx, tr));
+                if (selectedRowIdx === row._originalIdx) {
+                    tr.classList.add('selected-row');
+                }
+                tbody.appendChild(tr);
+            });
+        }
+
+        let selectedRowIdx = null;
+        function selectAlumniRow(originalIdx, tr) {
+            selectedRowIdx = originalIdx;
+            // Remove highlight from all rows
+            document.querySelectorAll('#alumniTableBody tr').forEach(row => row.classList.remove('selected-row'));
+            tr.classList.add('selected-row');
+            document.getElementById('externalRemoveBtn').disabled = false;
+        }
+        function removeSelectedAlumniRow() {
+            if (selectedRowIdx === null) return;
+            const data = getAlumniData();
+            data.splice(selectedRowIdx, 1);
+            setAlumniData(data);
+            selectedRowIdx = null;
+            renderAlumniTable();
+            document.getElementById('externalRemoveBtn').disabled = true;
+        }
+        function showForm() {
+            document.getElementById('showFormBtn').style.display = 'none';
+            document.getElementById('inputFields').style.display = 'flex';
+        }
+        function hideForm() {
+            document.getElementById('showFormBtn').style.display = '';
+            document.getElementById('inputFields').style.display = 'none';
+            document.getElementById('nameInput').value = '';
+            document.getElementById('majorInput').value = '';
+            document.getElementById('yearInput').value = '';
+            document.getElementById('projectInput').value = '';
+            document.getElementById('teamInput').value = '';
+        }
+        function addAlumniRow() {
+            const name = document.getElementById('nameInput').value.trim();
+            const major = document.getElementById('majorInput').value.trim();
+            const year = document.getElementById('yearInput').value.trim();
+            const project = document.getElementById('projectInput').value.trim();
+            const team = document.getElementById('teamInput').value.trim();
+            if (!name || !major || !year || !project || !team) return alert('Please fill all fields');
+            const data = getAlumniData();
+            data.push({ name, major, year, project, team });
+            setAlumniData(data);
+            renderAlumniTable();
+            hideForm();
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            renderAlumniTable();
+            document.getElementById('externalRemoveBtn').disabled = true;
+            // Deselect row when clicking outside the table
+            document.addEventListener('click', function(e) {
+                const table = document.getElementById('alumniTable');
+                if (!table.contains(e.target)) {
+                    selectedRowIdx = null;
+                    document.querySelectorAll('#alumniTableBody tr').forEach(row => row.classList.remove('selected-row'));
+                    document.getElementById('externalRemoveBtn').disabled = true;
+                }
+            });
+        });
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const search = this.value.trim().toLowerCase();
+                const rows = document.querySelectorAll('#alumniTableBody tr');
+                let found = false;
+                rows.forEach(row => {
+                    const nameCell = row.querySelector('td');
+                    if (nameCell && nameCell.textContent.trim().toLowerCase().includes(search) && search.length > 0) {
+                        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        row.style.background = '#ffe066';
+                        setTimeout(() => { row.style.background = ''; }, 1500);
+                        found = true;
+                    }
+                });
+                if (!found) {
+                    alert('Name not found!');
+                }
+            }
+        });
+        // Add this style for selected row
+        const style = document.createElement('style');
+        style.textContent = `.selected-row { background: #e3f0ff !important; }`;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html> 
