@@ -233,7 +233,7 @@
 
         // Remove alumni row via backend
         function removeAlumni(id) {
-            fetch(`${API_URL}/${id}`, {
+            fetch(`https://a038521f-5537-4186-bf1e-ed958abeb137-00-14yfl7kqa7q5s.pike.replit.dev/api/alumni/${id}`, {
                 method: 'DELETE'
             })
             .then(response => response.json())
