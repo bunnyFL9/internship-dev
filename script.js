@@ -186,6 +186,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize mobile menu
     createMobileMenu();
     window.addEventListener('resize', createMobileMenu);
+
+    // Fetch and display alumni data from backend
+    const apiUrl = 'https://a038521f-5537-4186-bf1e-ed958abeb137-00-14yfl7kqa7q5s.pike.replit.dev/api/alumni';
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Alumni data:', data);
+        // Example: display alumni in a div with id="alumni-list"
+        const alumniList = document.getElementById('alumni-list');
+        if (alumniList) {
+          alumniList.innerHTML = data.map(alumnus =>
+            `<li>${alumnus.name} (${alumnus.year})</li>`
+          ).join('');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching alumni data:', error);
+      });
 });
 
 // Add parallax effect to hero section
