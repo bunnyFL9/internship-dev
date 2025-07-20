@@ -169,70 +169,84 @@
     </footer>
     <script src="script.js"></script>
     <script>
-        // Alumni Table with Local Storage
-        const STORAGE_KEY = 'binusAlumniTable';
-        function getAlumniData() {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [
-                { name: 'Alice Lee', major: 'Computer Science', year: '2025', project: 'Data Analysis', team: 'Gamma' },
-                { name: 'Bob Tan', major: 'Information Systems', year: '2025', project: 'IoT Project', team: 'Delta' }
-            ];
+        // Backend API URL
+        const API_URL = 'https://a038521f-5537-4186-bf1e-ed958abeb137-00-14yfl7kqa7q5s.pike.replit.dev/api/alumni';
+
+        // Fetch alumni data from backend and render table
+        function fetchAndRenderAlumni() {
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(data => {
+                    renderAlumniTable(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching alumni:', error);
+                });
         }
-        function setAlumniData(data) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        }
-        function renderAlumniTable() {
-            let data = getAlumniData();
-            // Sort by team ascending (parse as number)
-            const originalData = data;
-            data = data.map((row, idx) => ({...row, _originalIdx: idx}));
-            data = data.slice().sort((a, b) => {
-                const teamA = parseInt(a.team, 10);
-                const teamB = parseInt(b.team, 10);
-                return teamA - teamB;
-            });
+
+        // Render alumni table from data
+        function renderAlumniTable(data) {
             const tbody = document.getElementById('alumniTableBody');
             tbody.innerHTML = '';
-            data.forEach((row, idx) => {
+            data.forEach((row) => {
                 const tr = document.createElement('tr');
-                tr.setAttribute('data-original-idx', row._originalIdx);
                 tr.innerHTML = `
                     <td>${row.name}</td>
-                    <td>${row.major}</td>
+                    <td>${row.major || ''}</td>
                     <td>${row.year}</td>
-                    <td>${row.project}</td>
+                    <td>${row.project || ''}</td>
                     <td>${row.team || ''}</td>
+                    <td><button class="remove-btn" onclick="removeAlumni(${row.id})">Remove</button></td>
                 `;
-                tr.addEventListener('click', () => selectAlumniRow(row._originalIdx, tr));
-                if (selectedRowIdx === row._originalIdx) {
-                    tr.classList.add('selected-row');
-                }
                 tbody.appendChild(tr);
             });
         }
 
-        let selectedRowIdx = null;
-        function selectAlumniRow(originalIdx, tr) {
-            selectedRowIdx = originalIdx;
-            // Remove highlight from all rows
-            document.querySelectorAll('#alumniTableBody tr').forEach(row => row.classList.remove('selected-row'));
-            tr.classList.add('selected-row');
-            document.getElementById('externalRemoveBtn').disabled = false;
+        // Add alumni row via backend
+        function addAlumniRow() {
+            const name = document.getElementById('nameInput').value;
+            const major = document.getElementById('majorInput').value;
+            const year = document.getElementById('yearInput').value;
+            const project = document.getElementById('projectInput').value;
+            const team = document.getElementById('teamInput').value;
+            if (!name || !year) {
+                alert('Name and year are required!');
+                return;
+            }
+            fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, major, year, project, team })
+            })
+            .then(response => response.json())
+            .then(() => {
+                fetchAndRenderAlumni();
+                hideForm();
+            })
+            .catch(error => {
+                console.error('Error adding alumni:', error);
+            });
         }
-        function removeSelectedAlumniRow() {
-            if (selectedRowIdx === null) return;
-            const data = getAlumniData();
-            data.splice(selectedRowIdx, 1);
-            setAlumniData(data);
-            selectedRowIdx = null;
-            renderAlumniTable();
-            document.getElementById('externalRemoveBtn').disabled = true;
+
+        // Remove alumni row via backend
+        function removeAlumni(id) {
+            fetch(`${API_URL}/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(() => {
+                fetchAndRenderAlumni();
+            })
+            .catch(error => {
+                console.error('Error deleting alumni:', error);
+            });
         }
+
+        // Show/hide form logic (unchanged)
         function showForm() {
-            document.getElementById('showFormBtn').style.display = 'none';
             document.getElementById('inputFields').style.display = 'flex';
         }
         function hideForm() {
-            document.getElementById('showFormBtn').style.display = '';
             document.getElementById('inputFields').style.display = 'none';
             document.getElementById('nameInput').value = '';
             document.getElementById('majorInput').value = '';
@@ -240,55 +254,9 @@
             document.getElementById('projectInput').value = '';
             document.getElementById('teamInput').value = '';
         }
-        function addAlumniRow() {
-            const name = document.getElementById('nameInput').value.trim();
-            const major = document.getElementById('majorInput').value.trim();
-            const year = document.getElementById('yearInput').value.trim();
-            const project = document.getElementById('projectInput').value.trim();
-            const team = document.getElementById('teamInput').value.trim();
-            if (!name || !major || !year || !project || !team) return alert('Please fill all fields');
-            const data = getAlumniData();
-            data.push({ name, major, year, project, team });
-            setAlumniData(data);
-            renderAlumniTable();
-            hideForm();
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            renderAlumniTable();
-            document.getElementById('externalRemoveBtn').disabled = true;
-            // Deselect row when clicking outside the table
-            document.addEventListener('click', function(e) {
-                const table = document.getElementById('alumniTable');
-                if (!table.contains(e.target)) {
-                    selectedRowIdx = null;
-                    document.querySelectorAll('#alumniTableBody tr').forEach(row => row.classList.remove('selected-row'));
-                    document.getElementById('externalRemoveBtn').disabled = true;
-                }
-            });
-        });
-        document.getElementById('searchInput').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const search = this.value.trim().toLowerCase();
-                const rows = document.querySelectorAll('#alumniTableBody tr');
-                let found = false;
-                rows.forEach(row => {
-                    const nameCell = row.querySelector('td');
-                    if (nameCell && nameCell.textContent.trim().toLowerCase().includes(search) && search.length > 0) {
-                        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        row.style.background = '#ffe066';
-                        setTimeout(() => { row.style.background = ''; }, 1500);
-                        found = true;
-                    }
-                });
-                if (!found) {
-                    alert('Name not found!');
-                }
-            }
-        });
-        // Add this style for selected row
-        const style = document.createElement('style');
-        style.textContent = `.selected-row { background: #e3f0ff !important; }`;
-        document.head.appendChild(style);
+
+        // Initial fetch
+        fetchAndRenderAlumni();
     </script>
 </body>
 </html> 
