@@ -196,8 +196,10 @@
                     <td>${row.year}</td>
                     <td>${row.project || ''}</td>
                     <td>${row.team || ''}</td>
-                    <td><button class="remove-btn" onclick="removeAlumni(${row.id})">Remove</button></td>
                 `;
+                tr.onclick = function() {
+                    selectAlumniRow(row.id, tr);
+                };
                 tbody.appendChild(tr);
             });
         }
@@ -253,6 +255,31 @@
             document.getElementById('yearInput').value = '';
             document.getElementById('projectInput').value = '';
             document.getElementById('teamInput').value = '';
+        }
+
+        let selectedAlumniId = null;
+        let selectedRowElement = null;
+
+        function selectAlumniRow(id, trElement) {
+            if (selectedRowElement) {
+                selectedRowElement.style.background = '';
+            }
+            selectedAlumniId = id;
+            selectedRowElement = trElement;
+            trElement.style.background = '#ffeaea';
+            document.getElementById('externalRemoveBtn').disabled = false;
+        }
+
+        function removeSelectedAlumniRow() {
+            if (selectedAlumniId) {
+                removeAlumni(selectedAlumniId);
+                selectedAlumniId = null;
+                if (selectedRowElement) {
+                    selectedRowElement.style.background = '';
+                    selectedRowElement = null;
+                }
+                document.getElementById('externalRemoveBtn').disabled = true;
+            }
         }
 
         // Initial fetch
