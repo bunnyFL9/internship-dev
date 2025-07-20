@@ -170,7 +170,7 @@
     <script src="script.js"></script>
     <script>
         // Backend API URL
-        const API_URL = 'https://a038521f-5537-4186-bf1e-ed958abeb137-00-14yfl7kqa7q5s.pike.replit.dev/api/alumni';
+        const API_URL = 'https://a038521f-5537-4186-bf1e-ed958abeb137-00-14yfl7kqa7q5s.pike.replit.dev/api/alumni?university=binus';
 
         // Fetch alumni data from backend and render table
         function fetchAndRenderAlumni() {
@@ -211,14 +211,15 @@
             const year = document.getElementById('yearInput').value;
             const project = document.getElementById('projectInput').value;
             const team = document.getElementById('teamInput').value;
+            const university = 'binus';
             if (!name || !year) {
                 alert('Name and year are required!');
                 return;
             }
-            fetch(API_URL, {
+            fetch('https://a038521f-5537-4186-bf1e-ed958abeb137-00-14yfl7kqa7q5s.pike.replit.dev/api/alumni', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, major, year, project, team })
+                body: JSON.stringify({ name, major, year, project, team, university })
             })
             .then(response => response.json())
             .then(() => {
