@@ -173,11 +173,13 @@
         const API_URL = 'https://a038521f-5537-4186-bf1e-ed958abeb137-00-14yfl7kqa7q5s.pike.replit.dev/api/alumni?university=binus';
 
         // Fetch alumni data from backend and render table
+        let alumniData = []; // simpan data alumni global
         function fetchAndRenderAlumni() {
             fetch(API_URL)
                 .then(response => response.json())
                 .then(data => {
-                    renderAlumniTable(data);
+                    alumniData = data; // simpan data alumni
+                    renderAlumniTable(alumniData);
                 })
                 .catch(error => {
                     console.error('Error fetching alumni:', error);
@@ -285,6 +287,15 @@
 
         // Initial fetch
         fetchAndRenderAlumni();
+
+        // Tambahkan event listener untuk search
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            const filtered = alumniData.filter(row =>
+                row.name.toLowerCase().includes(searchValue)
+            );
+            renderAlumniTable(filtered);
+        });
     </script>
 </body>
 </html> 
