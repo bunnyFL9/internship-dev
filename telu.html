@@ -70,9 +70,9 @@
                 <nav class="navigation">
                     <ul class="nav-menu">
                         <li><a href="index.html" class="nav-link">Home</a></li>
-                        <li><a href="#" class="nav-link">Calendar</a></li>
-                        <li><a href="#" class="nav-link">Programs</a></li>
-                        <li><a href="#" class="nav-link">Event</a></li>
+                        <li><a href="calendar.html" class="nav-link">Calendar</a></li>
+                        <li><a href="tracks.html" class="nav-link">Tracks</a></li>
+                        <li><a href="activities.html" class="nav-link">Activities</a></li>
                         <li><a href="#" class="nav-link active">Internship</a></li>
                     </ul>
                 </nav>
@@ -94,38 +94,110 @@
     <main class="main-content">
         <div class="container">
             <img src="./logotelu.png" alt="Telkom University Logo" class="small-logo">
-            <section>
-                <div style="display:flex; justify-content:flex-end; align-items:center; margin-bottom:10px;">
-                    <input type="text" id="searchInput" placeholder="Search name..." style="padding:6px 16px; border-radius:6px; border:1px solid #ccc; font-size:16px;">
-                </div>
-                <table class="alumni-table" id="alumniTable">
+            <!-- Search Bar at the Top -->
+            <div style="display:flex; justify-content:flex-end; align-items:center; margin: 32px 0 18px 0;">
+                <input type="text" id="searchInput" placeholder="Search project or team..." style="padding:6px 16px; border-radius:6px; border:1px solid #ccc; font-size:16px; width: 320px;">
+            </div>
+            <!-- PROJECTS SECTION START -->
+            <section id="projects-section" style="margin-bottom:40px;">
+                <h2 style="margin-bottom:16px;">Internship Projects 2025</h2>
+                <!-- Category Filter Bar -->
+                <div id="categoryFilterBar" style="margin-bottom:16px; display:flex; gap:8px; flex-wrap:wrap;"></div>
+                <!-- Add Project Button -->
+                <button class="add-btn" id="openAddProjectModalBtn" style="margin-bottom:16px;">+ Add Project</button>
+                <!-- Project Table -->
+                <div style="overflow-x:auto;">
+                <table class="modern-table" id="projectTable">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Major</th>
-                            <th>Year</th>
-                            <th>Project</th>
-                            <th>Team</th>
+                            <th>No</th>
+                            <th>Team Name</th>
+                            <th>Project Title</th>
+                            <th>Category</th>
+                            <th>Project Link</th>
+                            <th>Members</th>
                         </tr>
                     </thead>
-                    <tbody id="alumniTableBody">
-                        <!-- Rows will be rendered by JS -->
+                    <tbody id="projectTableBody">
+                        <!-- JS renders rows -->
                     </tbody>
                 </table>
-                <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 20px;">
-                    <button class="add-btn" id="showFormBtn" onclick="showForm()">Add</button>
-                    <button class="remove-btn" id="externalRemoveBtn" onclick="removeSelectedAlumniRow()" disabled style="font-size:16px; color:#fff; background:linear-gradient(90deg,#e74c3c 0%,#ff7675 100%); border:none; border-radius:8px; padding:8px 24px; font-weight:600; cursor:pointer; transition:background 0.3s;">Remove</button>
-                </div>
-                <div id="inputFields" style="display:none; gap:10px; align-items:center;">
-                    <input type="text" id="nameInput" placeholder="Name">
-                    <input type="text" id="majorInput" placeholder="Major">
-                    <input type="text" id="yearInput" placeholder="Year">
-                    <input type="text" id="projectInput" placeholder="Project">
-                    <input type="text" id="teamInput" placeholder="Team">
-                    <button class="add-btn" id="addRowBtn" onclick="addAlumniRow()">Add</button>
-                    <button onclick="hideForm()" style="background:#eee; border:none; border-radius:8px; padding:8px 16px; font-size:16px; cursor:pointer;">Close</button>
                 </div>
             </section>
+            <!-- ALL MEMBERS TABLE -->
+            <section id="all-members-section" style="margin-bottom:40px;">
+                <h2 style="margin-bottom:16px;">All Members</h2>
+                <div style="overflow-x:auto;">
+                    <table class="modern-table" id="allMembersTable">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Team Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allMembersTableBody">
+                            <!-- JS renders rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- Add Project Modal -->
+            <div id="addProjectModal" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <span class="close" id="closeAddProjectModal">&times;</span>
+                    <h3>Add Project</h3>
+                    <form id="addProjectForm" style="display:flex; flex-direction:column; gap:12px;">
+                        <input type="text" id="projectTeamInput" placeholder="Team Name" required>
+                        <input type="text" id="projectTitleInput" placeholder="Project Title" required>
+                        <select id="projectCategoryInput" required>
+                            <option value="">Category</option>
+                            <option value="Blockchain & Web3">Blockchain & Web3</option>
+                            <option value="Cybersecurity & Data Privacy">Cybersecurity & Data Privacy</option>
+                            <option value="AI & Machine Learning">AI & Machine Learning</option>
+                            <option value="Web Development & Digital Platforms">Web Development & Digital Platforms</option>
+                            <option value="IoT & Embedded Systems">IoT & Embedded Systems</option>
+                        </select>
+                        <input type="url" id="projectLinkInput" placeholder="Project Link" required>
+                        <button class="add-btn" type="submit">Add Project</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Add Member Modal -->
+            <div id="addMemberModal" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <span class="close" id="closeAddMemberModal">&times;</span>
+                    <h3>Add Member</h3>
+                    <form id="addMemberForm" style="display:flex; flex-direction:column; gap:12px;">
+                        <input type="text" id="memberNameInput" placeholder="Name" required>
+                        <select id="memberTeamInput" required></select>
+                        <input type="text" id="memberMajorInput" placeholder="Major" required>
+                        <input type="text" id="memberRoleInput" placeholder="Role" required>
+                        <button class="add-btn" type="submit">Add Member</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Add Edit Project Modal -->
+            <div id="editProjectModal" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <span class="close" id="closeEditProjectModal">&times;</span>
+                    <h3>Edit Project</h3>
+                    <form id="editProjectForm" style="display:flex; flex-direction:column; gap:12px;">
+                        <input type="text" id="editProjectTeamInput" placeholder="Team Name" required>
+                        <input type="text" id="editProjectTitleInput" placeholder="Project Title" required>
+                        <select id="editProjectCategoryInput" required>
+                            <option value="">Category</option>
+                            <option value="Blockchain & Web3">Blockchain & Web3</option>
+                            <option value="Cybersecurity & Data Privacy">Cybersecurity & Data Privacy</option>
+                            <option value="AI & Machine Learning">AI & Machine Learning</option>
+                            <option value="Web Development & Digital Platforms">Web Development & Digital Platforms</option>
+                            <option value="IoT & Embedded Systems">IoT & Embedded Systems</option>
+                        </select>
+                        <input type="url" id="editProjectLinkInput" placeholder="Project Link" required>
+                        <button class="add-btn" type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </main>
     <!-- Footer -->
@@ -169,133 +241,320 @@
     </footer>
     <script src="script.js"></script>
     <script>
-        // Backend API URL
-        const API_URL = 'https://a038521f-5537-4186-bf1e-ed958abeb137-00-14yfl7kqa7q5s.pike.replit.dev/api/alumni?university=telu';
+        // --- PROJECTS & MEMBERS API DATA AND LOGIC ---
+        const API_BASE = 'https://a038521f-5537-4186-bf1e-ed958abeb137-00-14yfl7kqa7q5s.pike.replit.dev';
+        const projectCategories = [
+            "All",
+            "Blockchain & Web3",
+            "Cybersecurity & Data Privacy",
+            "AI & Machine Learning",
+            "Web Development & Digital Platforms",
+            "IoT & Embedded Systems"
+        ];
+        let projects = [];
+        let members = [];
+        let expandedProjectIdx = null;
 
-        // Fetch alumni data from backend and render table
-        let alumniData = []; // simpan data alumni global
-        function fetchAndRenderAlumni() {
-            fetch(API_URL)
-                .then(response => response.json())
-                .then(data => {
-                    alumniData = data; // simpan data alumni
-                    renderAlumniTable(alumniData);
-                })
-                .catch(error => {
-                    console.error('Error fetching alumni:', error);
-                });
+        // Fetch all projects and members from backend
+        async function fetchProjectsAndMembers() {
+            const [projRes, memRes] = await Promise.all([
+                fetch(`${API_BASE}/api/projects`),
+                fetch(`${API_BASE}/api/members`)
+            ]);
+            projects = await projRes.json();
+            members = await memRes.json();
         }
 
-        // Render alumni table from data
-        function renderAlumniTable(data) {
-            const tbody = document.getElementById('alumniTableBody');
+        // Render category filter bar
+        function renderCategoryFilterBar() {
+            const bar = document.getElementById('categoryFilterBar');
+            bar.innerHTML = '';
+            projectCategories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.textContent = cat;
+                btn.setAttribute('data-category', cat);
+                if (cat === 'All') btn.classList.add('active');
+                btn.onclick = function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderProjectTable(cat);
+                };
+                bar.appendChild(btn);
+            });
+        }
+        // Render project table with expandable rows
+        function renderProjectTable(filterCat = 'All') {
+            const tbody = document.getElementById('projectTableBody');
             tbody.innerHTML = '';
-            data.forEach((row) => {
+            let filtered = filterCat === 'All' ? projects : projects.filter(p => p.category === filterCat);
+            filtered.forEach((proj, idx) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${row.name}</td>
-                    <td>${row.major || ''}</td>
-                    <td>${row.year}</td>
-                    <td>${row.project || ''}</td>
-                    <td>${row.team || ''}</td>
+                    <td>${idx + 1}</td>
+                    <td><span class="expand-team" style="color:#009DFF; font-weight:600;">${proj.team}</span></td>
+                    <td>${proj.title}</td>
+                    <td><span class="badge ${proj.category.toLowerCase().replace(/[^a-z0-9]/g, '')}">${proj.category}</span></td>
+                    <td><a href="${proj.link}" target="_blank" style="color:#009DFF; text-decoration:underline;">Link</a></td>
+                    <td style="display:flex; gap:6px; align-items:center;">
+                        <button class="add-btn add-member-btn" data-team="${proj.team}" style="padding:4px 12px; font-size:14px;">+ Add Member</button>
+                        <button class="edit-btn" data-id="${proj.id}" style="background:#f1c40f; color:#fff; border:none; border-radius:8px; padding:4px 12px; font-size:14px; font-weight:600; cursor:pointer;">Edit</button>
+                        <button class="remove-btn" data-id="${proj.id}" style="background:#e74c3c; color:#fff; border:none; border-radius:8px; padding:4px 12px; font-size:14px; font-weight:600; cursor:pointer;">Remove</button>
+                    </td>
                 `;
-                tr.onclick = function() {
-                    selectAlumniRow(row.id, tr);
+                tr.style.cursor = 'pointer';
+                tr.onclick = function(e) {
+                    if (e.target.classList.contains('add-member-btn') || e.target.classList.contains('edit-btn') || e.target.classList.contains('remove-btn')) return;
+                    if (expandedProjectIdx === idx) {
+                        expandedProjectIdx = null;
+                    } else {
+                        expandedProjectIdx = idx;
+                    }
+                    renderProjectTable(filterCat);
                 };
+                tbody.appendChild(tr);
+                if (expandedProjectIdx === idx) {
+                    const membersRow = document.createElement('tr');
+                    membersRow.className = 'members-row';
+                    const teamMembers = members.filter(m => m.team === proj.team);
+                    membersRow.innerHTML = `<td colspan="6">
+                        <div style="padding:12px 0 0 0;">
+                            <strong>Members:</strong>
+                            <ul style="margin:8px 0 0 0; padding:0; list-style:none;">
+                                ${teamMembers.length ? teamMembers.map(m => `<li style='margin-bottom:4px;'><span style='font-weight:500;'>${m.name}</span></li>`).join('') : '<li style="color:#888;">No members yet.</li>'}
+                            </ul>
+                        </div>
+                    </td>`;
+                    tbody.appendChild(membersRow);
+                }
+            });
+            // Add event listeners for add member buttons
+            document.querySelectorAll('.add-member-btn').forEach(btn => {
+                btn.onclick = function(e) {
+                    e.stopPropagation();
+                    openAddMemberModal(btn.getAttribute('data-team'));
+                };
+            });
+            // Add event listeners for edit and remove buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.onclick = function(e) {
+                    e.stopPropagation();
+                    const id = btn.getAttribute('data-id');
+                    openEditProjectModal(id);
+                };
+            });
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.onclick = async function(e) {
+                    e.stopPropagation();
+                    const id = btn.getAttribute('data-id');
+                    if (confirm('Are you sure you want to remove this project?')) {
+                        await fetch(`${API_BASE}/api/projects/${id}`, { method: 'DELETE' });
+                        await reloadAndRender();
+                    }
+                };
+            });
+        }
+        // Modal logic
+        function openAddProjectModal() {
+            document.getElementById('addProjectModal').style.display = 'block';
+        }
+        function closeAddProjectModal() {
+            document.getElementById('addProjectModal').style.display = 'none';
+            document.getElementById('addProjectForm').reset();
+        }
+        function openAddMemberModal(teamName = '') {
+            document.getElementById('addMemberModal').style.display = 'block';
+            renderTeamDropdown(teamName);
+        }
+        function closeAddMemberModal() {
+            document.getElementById('addMemberModal').style.display = 'none';
+            document.getElementById('addMemberForm').reset();
+        }
+        // Add Project Modal events
+        document.getElementById('openAddProjectModalBtn').onclick = openAddProjectModal;
+        document.getElementById('closeAddProjectModal').onclick = closeAddProjectModal;
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('addProjectModal')) closeAddProjectModal();
+            if (event.target === document.getElementById('addMemberModal')) closeAddMemberModal();
+        };
+        // Add Member Modal events
+        document.getElementById('closeAddMemberModal').onclick = closeAddMemberModal;
+        // Add project
+        document.getElementById('addProjectForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const team = document.getElementById('projectTeamInput').value.trim();
+            const title = document.getElementById('projectTitleInput').value.trim();
+            const category = document.getElementById('projectCategoryInput').value;
+            const link = document.getElementById('projectLinkInput').value.trim();
+            if (!team || !title || !category || !link) return;
+            await fetch(`${API_BASE}/api/projects`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ team, title, category, link, year: 2025 })
+            });
+            closeAddProjectModal();
+            await reloadAndRender();
+        });
+        // Render team dropdown for member form
+        function renderTeamDropdown(selectedTeam = '') {
+            const select = document.getElementById('memberTeamInput');
+            const teams = [...new Set(projects.map(p => p.team))];
+            select.innerHTML = '<option value="">Team Name</option>' + teams.map(t => `<option value="${t}" ${selectedTeam === t ? 'selected' : ''}>${t}</option>`).join('');
+        }
+        // Add member
+        document.getElementById('addMemberForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('memberNameInput').value.trim();
+            const team = document.getElementById('memberTeamInput').value;
+            if (!name || !team) return;
+            await fetch(`${API_BASE}/api/members`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, team })
+            });
+            closeAddMemberModal();
+            await reloadAndRender();
+        });
+        // Modal logic for Edit Project
+        function openEditProjectModal(id) {
+            const idx = projects.findIndex(p => p.id == id);
+            const proj = projects[idx];
+            document.getElementById('editProjectTeamInput').value = proj.team;
+            document.getElementById('editProjectTitleInput').value = proj.title;
+            document.getElementById('editProjectCategoryInput').value = proj.category;
+            document.getElementById('editProjectLinkInput').value = proj.link;
+            document.getElementById('editProjectModal').style.display = 'block';
+            document.getElementById('editProjectForm').onsubmit = async function(e) {
+                e.preventDefault();
+                await fetch(`${API_BASE}/api/projects/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        team: document.getElementById('editProjectTeamInput').value.trim(),
+                        title: document.getElementById('editProjectTitleInput').value.trim(),
+                        category: document.getElementById('editProjectCategoryInput').value,
+                        link: document.getElementById('editProjectLinkInput').value.trim(),
+                        year: 2025
+                    })
+                });
+                document.getElementById('editProjectModal').style.display = 'none';
+                await reloadAndRender();
+            };
+        }
+        document.getElementById('closeEditProjectModal').onclick = function() {
+            document.getElementById('editProjectModal').style.display = 'none';
+        };
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('addProjectModal')) closeAddProjectModal();
+            if (event.target === document.getElementById('addMemberModal')) closeAddMemberModal();
+            if (event.target === document.getElementById('editProjectModal')) document.getElementById('editProjectModal').style.display = 'none';
+        };
+        // Initial render
+        renderCategoryFilterBar();
+        renderProjectTable();
+        // Search bar filters projects by team name or project title
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            const filterCat = document.querySelector('.filter-btn.active').getAttribute('data-category');
+            let filtered = (filterCat === 'All' ? projects : projects.filter(p => p.category === filterCat));
+            filtered = filtered.filter(row =>
+                row.team.toLowerCase().includes(searchValue) ||
+                row.title.toLowerCase().includes(searchValue)
+            );
+            const tbody = document.getElementById('projectTableBody');
+            tbody.innerHTML = '';
+            filtered.forEach((proj, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${idx + 1}</td>
+                    <td><span class="expand-team" style="color:#009DFF; font-weight:600;">${proj.team}</span></td>
+                    <td>${proj.title}</td>
+                    <td><span class="badge ${proj.category.toLowerCase().replace(/[^a-z0-9]/g, '')}">${proj.category}</span></td>
+                    <td><a href="${proj.link}" target="_blank" style="color:#009DFF; text-decoration:underline;">Link</a></td>
+                    <td style="display:flex; gap:6px; align-items:center;">
+                        <button class="add-btn add-member-btn" data-team="${proj.team}" style="padding:4px 12px; font-size:14px;">+ Add Member</button>
+                        <button class="edit-btn" data-id="${proj.id}" style="background:#f1c40f; color:#fff; border:none; border-radius:8px; padding:4px 12px; font-size:14px; font-weight:600; cursor:pointer;">Edit</button>
+                        <button class="remove-btn" data-id="${proj.id}" style="background:#e74c3c; color:#fff; border:none; border-radius:8px; padding:4px 12px; font-size:14px; font-weight:600; cursor:pointer;">Remove</button>
+                    </td>
+                `;
+                tr.style.cursor = 'pointer';
+                tr.onclick = function(e) {
+                    if (e.target.classList.contains('add-member-btn') || e.target.classList.contains('edit-btn') || e.target.classList.contains('remove-btn')) return;
+                    if (expandedProjectIdx === idx) {
+                        expandedProjectIdx = null;
+                    } else {
+                        expandedProjectIdx = idx;
+                    }
+                    document.getElementById('searchInput').dispatchEvent(new Event('input'));
+                };
+                tbody.appendChild(tr);
+                if (expandedProjectIdx === idx) {
+                    const membersRow = document.createElement('tr');
+                    membersRow.className = 'members-row';
+                    const teamMembers = members.filter(m => m.team === proj.team);
+                    membersRow.innerHTML = `<td colspan="6">
+                        <div style="padding:12px 0 0 0;">
+                            <strong>Members:</strong>
+                            <ul style="margin:8px 0 0 0; padding:0; list-style:none;">
+                                ${teamMembers.length ? teamMembers.map(m => `<li style='margin-bottom:4px;'><span style='font-weight:500;'>${m.name}</span></li>`).join('') : '<li style="color:#888;">No members yet.</li>'}
+                            </ul>
+                        </div>
+                    </td>`;
+                    tbody.appendChild(membersRow);
+                }
+            });
+            // Add event listeners for add member buttons
+            document.querySelectorAll('.add-member-btn').forEach(btn => {
+                btn.onclick = function(e) {
+                    e.stopPropagation();
+                    openAddMemberModal(btn.getAttribute('data-team'));
+                };
+            });
+            // Add event listeners for edit and remove buttons
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.onclick = function(e) {
+                    e.stopPropagation();
+                    const id = btn.getAttribute('data-id');
+                    openEditProjectModal(id);
+                };
+            });
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.onclick = async function(e) {
+                    e.stopPropagation();
+                    const id = btn.getAttribute('data-id');
+                    if (confirm('Are you sure you want to remove this project?')) {
+                        await fetch(`${API_BASE}/api/projects/${id}`, { method: 'DELETE' });
+                        await reloadAndRender();
+                    }
+                };
+            });
+            // Filter all members table
+            const filteredMembers = members.filter(m =>
+                m.name.toLowerCase().includes(searchValue) ||
+                m.team.toLowerCase().includes(searchValue)
+            );
+            renderAllMembersTable(filteredMembers);
+        });
+        // Render all members table
+        function renderAllMembersTable(filteredMembers = null) {
+            const tbody = document.getElementById('allMembersTableBody');
+            tbody.innerHTML = '';
+            const data = filteredMembers || members;
+            data.forEach((m, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${idx + 1}</td>
+                    <td>${m.name}</td>
+                    <td>${m.team}</td>
+                `;
                 tbody.appendChild(tr);
             });
         }
-
-        // Add alumni row via backend
-        function addAlumniRow() {
-            const name = document.getElementById('nameInput').value;
-            const major = document.getElementById('majorInput').value;
-            const year = document.getElementById('yearInput').value;
-            const project = document.getElementById('projectInput').value;
-            const team = document.getElementById('teamInput').value;
-            const university = 'telu';
-            if (!name || !year) {
-                alert('Name and year are required!');
-                return;
-            }
-            fetch('https://a038521f-5537-4186-bf1e-ed958abeb137-00-14yfl7kqa7q5s.pike.replit.dev/api/alumni', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, major, year, project, team, university })
-            })
-            .then(response => response.json())
-            .then(() => {
-                fetchAndRenderAlumni();
-                hideForm();
-            })
-            .catch(error => {
-                console.error('Error adding alumni:', error);
-            });
-        }
-
-        // Remove alumni row via backend
-        function removeAlumni(id) {
-            fetch(`https://a038521f-5537-4186-bf1e-ed958abeb137-00-14yfl7kqa7q5s.pike.replit.dev/api/alumni/${id}`, {
-                method: 'DELETE'
-            })
-            .then(response => response.json())
-            .then(() => {
-                fetchAndRenderAlumni();
-            })
-            .catch(error => {
-                console.error('Error deleting alumni:', error);
-            });
-        }
-
-        // Show/hide form logic (unchanged)
-        function showForm() {
-            document.getElementById('inputFields').style.display = 'flex';
-        }
-        function hideForm() {
-            document.getElementById('inputFields').style.display = 'none';
-            document.getElementById('nameInput').value = '';
-            document.getElementById('majorInput').value = '';
-            document.getElementById('yearInput').value = '';
-            document.getElementById('projectInput').value = '';
-            document.getElementById('teamInput').value = '';
-        }
-
-        let selectedAlumniId = null;
-        let selectedRowElement = null;
-
-        function selectAlumniRow(id, trElement) {
-            if (selectedRowElement) {
-                selectedRowElement.style.background = '';
-            }
-            selectedAlumniId = id;
-            selectedRowElement = trElement;
-            trElement.style.background = '#ffeaea';
-            document.getElementById('externalRemoveBtn').disabled = false;
-        }
-
-        function removeSelectedAlumniRow() {
-            if (selectedAlumniId) {
-                removeAlumni(selectedAlumniId);
-                selectedAlumniId = null;
-                if (selectedRowElement) {
-                    selectedRowElement.style.background = '';
-                    selectedRowElement = null;
-                }
-                document.getElementById('externalRemoveBtn').disabled = true;
-            }
-        }
-
-        // Initial fetch
-        fetchAndRenderAlumni();
-
-        // Tambahkan event listener untuk search
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchValue = this.value.toLowerCase();
-            const filtered = alumniData.filter(row =>
-                row.name.toLowerCase().includes(searchValue)
-            );
-            renderAlumniTable(filtered);
-        });
+        // Initial render
+        renderCategoryFilterBar();
+        renderProjectTable();
+        renderAllMembersTable();
+        // After adding/removing/editing members or projects, call renderAllMembersTable() to update the table.
     </script>
 </body>
 </html> 

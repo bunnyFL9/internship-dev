@@ -1,0 +1,19 @@
+{
+  "name": "internship-dev",
+  "version": "1.0.0",
+  "description": "A modern, responsive web page showcasing ProcodeCG's internship alumni from 2020-2025. This project is based on a Figma design and features a clean, professional layout with interactive elements.",
+  "main": "script.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "sqlite3": "^5.1.7"
+  }
+}

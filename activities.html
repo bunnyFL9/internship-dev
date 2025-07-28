@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProcodeCG - Activities & Events</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .activities-container {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin: 32px 0;
+        }
+        
+        .activities-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        
+        .activities-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .filter-tab {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-tab.active {
+            background: linear-gradient(90deg, #009DFF 0%, #0D6EFD 100%);
+            color: white;
+            border-color: #009DFF;
+        }
+        
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 24px;
+        }
+        
+        .activity-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+        
+        .activity-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+        }
+        
+        .activity-content {
+            padding: 24px;
+        }
+        
+        .activity-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        
+        .activity-type.workshop {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .activity-type.hackathon {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .activity-type.networking {
+            background: #e8f5e8;
+            color: #388e3c;
+        }
+        
+        .activity-type.tech-talk {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .activity-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+        
+        .activity-description {
+            font-size: 14px;
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-size: 12px;
+            color: #6c757d;
+        }
+        
+        .activity-date {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .activity-duration {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .activity-participants {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .activity-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #009DFF 0%, #0D6EFD 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,157,255,0.3);
+        }
+        
+        .back-link {
+            text-decoration: none;
+            color: #009DFF;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-link:hover {
+            color: #0D6EFD;
+        }
+        
+        .upcoming-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ff4757;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="./procodelogo.png" alt="ProcodeCG Logo">
+                </div>
+                
+                <nav class="navigation">
+                    <ul class="nav-menu">
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li><a href="calendar.html" class="nav-link">Calendar</a></li>
+                        <li><a href="tracks.html" class="nav-link">Tracks</a></li>
+                        <li><a href="activities.html" class="nav-link active">Activities</a></li>
+                        <li><a href="#" class="nav-link">Internship</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-actions">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="user-profile">
+                        <div class="profile-image">
+                            <img src="./fotoprofil.png" alt="Restu Jagat W.">
+                        </div>
+                        <span class="user-name">Restu Jagat W.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="activities-container">
+                <div class="activities-header">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <a href="index.html" class="back-link">
+                            <i class="fas fa-arrow-left"></i> Back to Home
+                        </a>
+                        <h1 class="activities-title">Activities & Events</h1>
+                    </div>
+                </div>
+
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">All Activities</button>
+                    <button class="filter-tab" data-filter="workshop">Workshops</button>
+                    <button class="filter-tab" data-filter="hackathon">Hackathons</button>
+                    <button class="filter-tab" data-filter="networking">Networking</button>
+                    <button class="filter-tab" data-filter="tech-talk">Tech Talks</button>
+                </div>
+
+                <div class="activities-grid" id="activitiesGrid">
+                    <!-- Workshop -->
+                    <div class="activity-card" data-type="workshop">
+                        <div class="activity-image">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="activity-content">
+                            <span class="activity-type workshop">Workshop</span>
+                            <h3 class="activity-title">React Fundamentals Workshop</h3>
+                            <p class="activity-description">
+                                Learn React basics through hands-on coding. Build your first React app and understand core concepts like components, state, and props.
+                            </p>
+                            <div class="activity-meta">
+                                <div class="activity-date">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Aug 25, 2025</span>
+                                </div>
+                                <div class="activity-duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>4 hours</span>
+                                </div>
+                                <div class="activity-participants">
+                                    <i class="fas fa-users"></i>
+                                    <span>20/25</span>
+                                </div>
+                            </div>
+                            <div class="activity-actions">
+                                <button class="btn-secondary">Learn More</button>
+                                <button class="btn-primary">Register</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hackathon -->
+                    <div class="activity-card" data-type="hackathon">
+                        <div class="activity-image">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="activity-content">
+                            <span class="activity-type hackathon">Hackathon</span>
+                            <h3 class="activity-title">24-Hour Innovation Challenge</h3>
+                            <p class="activity-description">
+                                Build something amazing in 24 hours! Work in teams to create innovative solutions using the latest technologies.
+                            </p>
+                            <div class="activity-meta">
+                                <div class="activity-date">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Sep 15-16, 2025</span>
+                                </div>
+                                <div class="activity-duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>24 hours</span>
+                                </div>
+                                <div class="activity-participants">
+                                    <i class="fas fa-users"></i>
+                                    <span>15/20 teams</span>
+                                </div>
+                            </div>
+                            <div class="activity-actions">
+                                <button class="btn-secondary">Learn More</button>
+                                <button class="btn-primary">Join Team</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Networking -->
+                    <div class="activity-card" data-type="networking">
+                        <div class="activity-image">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="activity-content">
+                            <span class="activity-type networking">Networking</span>
+                            <h3 class="activity-title">Alumni Meet & Greet</h3>
+                            <p class="activity-description">
+                                Connect with ProcodeCG alumni who are now working at top tech companies. Get career advice and build your professional network.
+                            </p>
+                            <div class="activity-meta">
+                                <div class="activity-date">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Sep 5, 2025</span>
+                                </div>
+                                <div class="activity-duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>3 hours</span>
+                                </div>
+                                <div class="activity-participants">
+                                    <i class="fas fa-users"></i>
+                                    <span>30/40</span>
+                                </div>
+                            </div>
+                            <div class="activity-actions">
+                                <button class="btn-secondary">Learn More</button>
+                                <button class="btn-primary">RSVP</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Talk -->
+                    <div class="activity-card" data-type="tech-talk">
+                        <div class="activity-image">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <div class="activity-content">
+                            <span class="activity-type tech-talk">Tech Talk</span>
+                            <h3 class="activity-title">AI in Modern Web Development</h3>
+                            <p class="activity-description">
+                                Learn how AI is transforming web development. Guest speaker from Google will share insights on AI-powered tools and frameworks.
+                            </p>
+                            <div class="activity-meta">
+                                <div class="activity-date">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Aug 30, 2025</span>
+                                </div>
+                                <div class="activity-duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>2 hours</span>
+                                </div>
+                                <div class="activity-participants">
+                                    <i class="fas fa-users"></i>
+                                    <span>50/60</span>
+                                </div>
+                            </div>
+                            <div class="activity-actions">
+                                <button class="btn-secondary">Learn More</button>
+                                <button class="btn-primary">Register</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Workshop -->
+                    <div class="activity-card" data-type="workshop">
+                        <div class="activity-image">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="activity-content">
+                            <span class="activity-type workshop">Workshop</span>
+                            <h3 class="activity-title">Database Design Workshop</h3>
+                            <p class="activity-description">
+                                Master database design principles. Learn SQL, NoSQL, and database optimization techniques for scalable applications.
+                            </p>
+                            <div class="activity-meta">
+                                <div class="activity-date">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Sep 10, 2025</span>
+                                </div>
+                                <div class="activity-duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>6 hours</span>
+                                </div>
+                                <div class="activity-participants">
+                                    <i class="fas fa-users"></i>
+                                    <span>18/25</span>
+                                </div>
+                            </div>
+                            <div class="activity-actions">
+                                <button class="btn-secondary">Learn More</button>
+                                <button class="btn-primary">Register</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Networking -->
+                    <div class="activity-card" data-type="networking">
+                        <div class="activity-image">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="activity-content">
+                            <span class="activity-type networking">Networking</span>
+                            <h3 class="activity-title">Career Fair 2025</h3>
+                            <p class="activity-description">
+                                Meet with top tech companies and startups. Find internship and job opportunities. Bring your resume and portfolio!
+                            </p>
+                            <div class="activity-meta">
+                                <div class="activity-date">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Oct 5, 2025</span>
+                                </div>
+                                <div class="activity-duration">
+                                    <i class="fas fa-clock"></i>
+                                    <span>8 hours</span>
+                                </div>
+                                <div class="activity-participants">
+                                    <i class="fas fa-users"></i>
+                                    <span>100/150</span>
+                                </div>
+                            </div>
+                            <div class="activity-actions">
+                                <button class="btn-secondary">Learn More</button>
+                                <button class="btn-primary">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="contact-info">
+                    <h3>Contact Us</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <span>procodecg@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <span>(+62)8122015409</span>
+                    </div>
+                </div>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Filter functionality
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                filterActivities(filter);
+            });
+        });
+
+        function filterActivities(filter) {
+            const activities = document.querySelectorAll('.activity-card');
+            activities.forEach(activity => {
+                if (filter === 'all' || activity.getAttribute('data-type') === filter) {
+                    activity.style.display = 'block';
+                } else {
+                    activity.style.display = 'none';
+                }
+            });
+        }
+
+        // Button click handlers
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                const activityTitle = this.closest('.activity-card').querySelector('.activity-title').textContent;
+                alert(`Registration for "${activityTitle}" will be available soon!`);
+            });
+        });
+
+        document.querySelectorAll('.btn-secondary').forEach(button => {
+            button.addEventListener('click', function() {
+                const activityTitle = this.closest('.activity-card').querySelector('.activity-title').textContent;
+                alert(`More details about "${activityTitle}" coming soon!`);
+            });
+        });
+    </script>
+</body>
+</html> 
